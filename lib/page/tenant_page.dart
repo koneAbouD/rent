@@ -1,10 +1,31 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 
-class TenantPage extends StatelessWidget {
+class TenantPage extends StatefulWidget {
+
   const TenantPage({super.key});
 
+  @override
+  State<TenantPage> createState() => _TenantPageState();
+}
+
+class _TenantPageState extends State<TenantPage> {
+  final tenants = [
+    {
+      "nom" : "Colibaly Djibril",
+      "moisArrieres" : 0,
+      "appartement" : "A2"
+    },
+    {
+      "nom" : "Ouattara kassoum",
+      "moisArrieres" : 2,
+      "appartement" : "A2"
+    },
+    {
+      "nom" : "Sib Ery",
+      "moisArrieres" : 4,
+      "appartement" : "A2"
+    }
+  ];
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -14,47 +35,25 @@ class TenantPage extends StatelessWidget {
           centerTitle: true,
         ),
         body: Center(
-            child: ListView(
-              children:  const [
-                Card(
+            child: ListView.builder(
+              itemCount: tenants.length,
+              itemBuilder: (context, index){
+                final tenant = tenants[index];
+                final nom = tenant['nom'];
+                final moisArrieres = tenant['moisArrieres'];
+                return Card(
                   child: ListTile(
-                    leading: Icon(Icons.person),
-                    title: Text("Coulibaly"),
-                    subtitle: Text("Ajours",
-                    style: TextStyle(color: Colors.green),),
-                    trailing: Icon(Icons.more_vert),
-                  ),
-                ),
-                Card(
-                  child: ListTile(
-                    leading: Icon(Icons.person),
-                    title: Text("Ouattara"),
-                    subtitle: Text("En retard de deux mois",
-                      style: TextStyle(color: Colors.orange),),
-                    trailing: Icon(Icons.more_vert),
-                  ),
-                ),
-                Card(
-                  child: ListTile(
-                    leading: Icon(Icons.person),
-                    title: Text("Sib"),
-                    subtitle: Text("En retard de quatre mois",
-                      style: TextStyle(color: Colors.redAccent),),
-                    trailing: Icon(Icons.more_vert),
-                  ),
-                ),
-                Card(
-                  child: ListTile(
-                    leading: Icon(Icons.person),
-                    title: Text("Bamba"),
-                    subtitle: Text("Ajours",
+                    leading: const Icon(Icons.person),
+                    title: Text('$nom'),
+                    subtitle: const Text("Ajours",
                       style: TextStyle(color: Colors.green),),
-                    trailing: Icon(Icons.more_vert),
+                    trailing: const Icon(Icons.more_vert),
                   ),
-                )
-              ],
+                );
+              },
             )
         )
     );
   }
 }
+
