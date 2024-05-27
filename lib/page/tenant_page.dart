@@ -28,30 +28,23 @@ class _TenantPageState extends State<TenantPage> {
   ];
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        appBar: AppBar(
-          title: const Text("Lists des locataire"),
-          backgroundColor: Colors.greenAccent,
-          centerTitle: true,
-        ),
-        body: Center(
-            child: ListView.builder(
-              itemCount: tenants.length,
-              itemBuilder: (context, index){
-                final tenant = tenants[index];
-                final nom = tenant['nom'];
-                final moisArrieres = tenant['moisArrieres'];
-                return Card(
-                  child: ListTile(
-                    leading: const Icon(Icons.person),
-                    title: Text('$nom'),
-                    subtitle: const Text("Ajours",
-                      style: TextStyle(color: Colors.green),),
-                    trailing: const Icon(Icons.more_vert),
-                  ),
-                );
-              },
-            )
+    return Center(
+        child: ListView.builder(
+          itemCount: tenants.length,
+          itemBuilder: (context, index){
+            final tenant = tenants[index];
+            final nom = tenant['nom'];
+            final moisArrieres = tenant['moisArrieres'];
+            return Card(
+              child: ListTile(
+                leading: const Icon(Icons.person),
+                title: Text('$nom'),
+                subtitle: const Text("Ajours",
+                  style: TextStyle(color: Colors.green),),
+                trailing: const Icon(Icons.more_vert),
+              ),
+            );
+          },
         )
     );
   }
