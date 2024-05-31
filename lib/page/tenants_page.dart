@@ -10,7 +10,7 @@ class TenantPage extends StatefulWidget {
 }
 
 class _TenantsPageState extends State<TenantPage> {
-  final tenants = [
+  /*final tenants = [
     {
       "name" : "Colibaly Djibril",
       "moisArrieres" : 0,
@@ -26,7 +26,7 @@ class _TenantsPageState extends State<TenantPage> {
       "moisArrieres" : 4,
       "appartement" : "A2"
     }
-  ];
+  ];*/
   @override
   Widget build(BuildContext context) {
     return Center(
@@ -41,17 +41,18 @@ class _TenantsPageState extends State<TenantPage> {
               return const Text('Aucune donneé');
             }
 
-            /*List<dynamic> tenants = [];
+            List<dynamic> tenants = [];
             snapshot.data!.docs.forEach((element){
               tenants.add(element);
-            });*/
+            });
 
             return ListView.builder(
               itemCount: tenants.length,
               itemBuilder: (context, index){
                 final tenant = tenants[index];
                 final nom = tenant['name'];
-                final moisArrieres = tenant['moisArrieres'] as int;
+                final moisArrieres = 2;
+                //final moisArrieres = tenant['moisArrieres'] as int;
                 return Card(
                   child: ListTile(
                     leading: const Icon(Icons.person),
