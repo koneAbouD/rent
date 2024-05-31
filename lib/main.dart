@@ -1,10 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:rent/page/add_tenant_page.dart';
-import 'package:rent/page/tenant_page.dart';
+import 'package:rent/page/tenants_page.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'firebase_options.dart';
 
 import 'page/home_page.dart';
 
-void main() {
+void main() async{
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
   runApp(const MyApp());
 }
 
@@ -32,8 +38,8 @@ class _MyAppState extends State<MyApp> {
         appBar: AppBar(
             title: [
               const Text("Accueil"),
-              const Text("Liste des locataires"),
-              const Text("Add locataire")
+              const Text("Locataires"),
+              const Text("Ajouter un locataire")
             ][_currentIndex],
             backgroundColor: Colors.greenAccent),
         body: [

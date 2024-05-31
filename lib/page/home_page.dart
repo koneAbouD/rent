@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:rent/page/tenant_page.dart';
+import 'package:rent/page/tenants_page.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({

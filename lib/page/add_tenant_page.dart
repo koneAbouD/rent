@@ -1,5 +1,6 @@
 import 'dart:js_interop';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:date_field/date_field.dart';
 import 'package:flutter/material.dart';
 
@@ -52,7 +53,7 @@ class _AddTenantPageState extends State<AddTenantPage> {
               margin: const EdgeInsets.only(bottom: 10),
               child: TextFormField(
                 decoration: const InputDecoration(
-                    labelText: "Nom",
+                    labelText: "Prenom",
                     hintText: "Entrer le prenom du locataire",
                     border: OutlineInputBorder()),
                 validator: (value) {
@@ -119,7 +120,14 @@ class _AddTenantPageState extends State<AddTenantPage> {
                     ScaffoldMessenger.of(context).showSnackBar(
                       const SnackBar(content: Text('Processing Data')),
                     );
-                    print('le locataire :$name $lastName habite le batiment $selectedBatLocataire depuis le $selectedDate');
+                    CollectionReference tenantsRef = FirebaseFirestore.instance.collection("Tenants");
+                    tenantsRef.add(
+                        {
+                          "name" : name,
+                          "last_name" : lastName,
+                        }
+                    );
+
                   }
                 },
                 child: const Text("Envoyer"),
