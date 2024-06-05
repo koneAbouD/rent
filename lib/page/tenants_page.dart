@@ -1,5 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
+import 'package:rent/models/tenant_model.dart';
 
 class TenantPage extends StatefulWidget {
 
@@ -10,23 +12,36 @@ class TenantPage extends StatefulWidget {
 }
 
 class _TenantsPageState extends State<TenantPage> {
-  /*final tenants = [
-    {
-      "name" : "Colibaly Djibril",
-      "moisArrieres" : 0,
-      "appartement" : "A2"
-    },
-    {
-      "name" : "Ouattara kassoum",
-      "moisArrieres" : 2,
-      "appartement" : "A2"
-    },
-    {
-      "name" : "Sib Ery",
-      "moisArrieres" : 4,
-      "appartement" : "A2"
-    }
-  ];*/
+
+  Future<void> _showDetailTenant(Tenant tenant) async {
+    return showDialog<void>(
+      context: context,
+      barrierDismissible: false, // user must tap button!
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text('AlertDialog Title'),
+          content: SingleChildScrollView(
+            child: ListBody(
+              children: <Widget>[
+                Text('${tenant.lastName} occupe'),
+                Text('Would you like to approve of this message?'),
+              ],
+            ),
+          ),
+          actions: <Widget>[
+            TextButton(
+              child: const Text('Approve'),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+
   @override
   Widget build(BuildContext context) {
     return Center(
@@ -41,36 +56,44 @@ class _TenantsPageState extends State<TenantPage> {
               return const Text('Aucune donneé');
             }
 
-            List<dynamic> tenants = [];
-            snapshot.data!.docs.forEach((element){
-              tenants.add(element);
+            List<Tenant> tenants = [];
+            snapshot.data!.docs.forEach((data){
+              tenants.add(Tenant.fromData(data));
             });
 
             return ListView.builder(
               itemCount: tenants.length,
               itemBuilder: (context, index){
                 final tenant = tenants[index];
-                final nom = tenant['name'];
-                final moisArrieres = 2;
-                //final moisArrieres = tenant['moisArrieres'] as int;
+                const moisArrieres = 1;
                 return Card(
                   child: ListTile(
-                    leading: const Icon(Icons.person),
-                    title: Text('$nom'),
-                    subtitle: moisArrieres < 0
-                        ? const Text('A jours',
+                    title: Text(tenant.name),
+                    leading: SvgPicture.asset(
+                      "assets/images/logo.svg",
+                      width: 40,
+                      height: 40,
+                    ),
+                    subtitle: moisArrieres <= 0
+                        ? const Text('A jour',
                       style: TextStyle(color: Colors.green),
                     )
                         : const Text('En retard',
-                        style: TextStyle(color: Colors.green)
+                        style: moisArrieres > 2
+                            ? TextStyle(color: Colors.redAccent)
+                            : TextStyle(color: Colors.orange)
                     ),
-                    trailing: const Icon(Icons.more_vert),
+                    trailing: IconButton(
+                      icon: const Icon(Icons.more_vert),
+                      onPressed: () {
+                        _showDetailTenant(tenant);
+                      },
+                    ),
                   ),
                 );
               },
             );
           },
-
         )
     );
   }
